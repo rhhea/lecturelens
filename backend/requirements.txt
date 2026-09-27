@@ -1,0 +1,20 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9
+
+# Ingestion
+pymupdf>=1.28.2
+python-docx==1.1.2
+
+# Core models
+transformers>=4.44.2
+torch>=2.6.0
+sentencepiece>=0.2.2
+
+# Resource recommender
+keybert>=0.8.5
+sentence-transformers>=3.1.1
+faiss-cpu>=1.9.0
+
+# Utils
+pydantic==2.9.2

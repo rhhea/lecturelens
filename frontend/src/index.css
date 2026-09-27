@@ -1,0 +1,310 @@
+/* ==========================================================================
+   LectureLens — design tokens
+   Concept: a single manuscript page, not a dashboard. A hairline "spine"
+   rule runs down the left margin with small serif numerals marking each
+   section, the way a thesis or lab notebook numbers its parts. One accent
+   (a worn ink-red, like a professor's pen) is spent sparingly; everything
+   else stays paper-and-ink.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  /* color */
+  --paper: #f6f1e4;
+  --paper-raised: #fffdf8;
+  --ink: #202a35;
+  --ink-soft: #5b6472;
+  --rule: #d9cfb6;
+  --maroon: #7a2e2e;
+  --maroon-soft: #a3504f;
+  --sage: #55725a;
+
+  /* type */
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  /* layout */
+  --page-width: 720px;
+  --spine-offset: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem 6rem;
+}
+
+/* ---- masthead -------------------------------------------------------- */
+
+.masthead {
+  margin-bottom: 3.5rem;
+}
+
+.masthead__wordmark {
+  font-size: 2.1rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.masthead__tagline {
+  margin: 0.4rem 0 0;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.masthead__rule {
+  margin-top: 1.75rem;
+  border: none;
+  border-top: 1px solid var(--rule);
+}
+
+/* ---- section spine ----------------------------------------------------- */
+
+.sections {
+  position: relative;
+}
+
+.sections::before {
+  content: '';
+  position: absolute;
+  left: var(--spine-offset);
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--rule);
+}
+
+.section {
+  position: relative;
+  padding-left: 56px;
+  margin-bottom: 3.25rem;
+}
+
+.section-number {
+  position: absolute;
+  left: 0;
+  top: -2px;
+  width: 40px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--maroon);
+  background: var(--paper);
+  padding: 2px 0;
+}
+
+.section-title {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.section-hint {
+  margin: -0.5rem 0 1rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+/* one deliberate reveal, staggered across the four sections, once results
+   arrive -- not a per-hover animation on every element */
+.section--reveal {
+  animation: rise 0.5s ease both;
+}
+.section--reveal:nth-of-type(1) { animation-delay: 0s; }
+.section--reveal:nth-of-type(2) { animation-delay: 0.12s; }
+.section--reveal:nth-of-type(3) { animation-delay: 0.24s; }
+.section--reveal:nth-of-type(4) { animation-delay: 0.36s; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section--reveal { animation: none; }
+}
+
+/* ---- upload panel ------------------------------------------------------ */
+
+.dropzone {
+  border: 1px dashed var(--rule);
+  background: var(--paper-raised);
+  padding: 1.75rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.dropzone:hover,
+.dropzone--active {
+  border-color: var(--maroon-soft);
+}
+
+.dropzone input[type='file'] {
+  display: none;
+}
+
+.dropzone__label {
+  display: block;
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+}
+
+.dropzone__filename {
+  margin-top: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.btn {
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  border: none;
+  padding: 0.7rem 1.4rem;
+  cursor: pointer;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--maroon);
+}
+
+.btn:disabled {
+  background: var(--rule);
+  color: var(--ink-soft);
+  cursor: not-allowed;
+}
+
+.error-text {
+  margin-top: 1rem;
+  color: var(--maroon);
+  font-size: 0.9rem;
+}
+
+/* ---- abstract / summary ------------------------------------------------ */
+
+.abstract {
+  font-size: 1.02rem;
+  color: var(--ink);
+}
+
+.abstract--empty {
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* ---- study questions ---------------------------------------------------- */
+
+.questions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: q;
+}
+
+.questions li {
+  counter-increment: q;
+  position: relative;
+  padding-left: 2.1rem;
+  margin-bottom: 0.9rem;
+}
+
+.questions li::before {
+  content: counter(q) '.';
+  position: absolute;
+  left: 0;
+  color: var(--maroon);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+/* ---- further reading (bibliography style) ------------------------------- */
+
+.resources {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resource {
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--rule);
+}
+
+.resource:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.resource__title {
+  font-style: italic;
+  font-size: 1.02rem;
+}
+
+.resource__title a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+.resource__title a:hover {
+  color: var(--maroon);
+  border-bottom-color: var(--maroon-soft);
+}
+
+.resource__meta {
+  margin-top: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--sage);
+}
+
+/* ---- responsive ---------------------------------------------------------- */
+
+@media (max-width: 520px) {
+  .page {
+    padding: 3rem 1.1rem 4rem;
+  }
+  .section {
+    padding-left: 40px;
+  }
+  .section-number {
+    width: 30px;
+    left: 0;
+  }
+  :root {
+    --spine-offset: 14px;
+  }
+}
+
+/* ---- accessibility -------------------------------------------------------- */
+
+a:focus-visible,
+button:focus-visible,
+.dropzone:focus-visible {
+  outline: 2px solid var(--maroon);
+  outline-offset: 2px;
+}
