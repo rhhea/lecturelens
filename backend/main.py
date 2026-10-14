@@ -1,17 +1,7 @@
 """
 main.py
 -------
-FastAPI service for LectureLens. One endpoint takes an uploaded file
-and returns:
-  - a summary
-  - follow-up questions
-  - recommended resources
 
-Run locally with:
-    uvicorn main:app --reload --port 8000
-
-Then your Node/Express backend calls this service, e.g.:
-    POST http://localhost:8000/process   (multipart file upload)
 """
 
 import shutil
